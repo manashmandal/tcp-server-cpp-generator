@@ -1,5 +1,3 @@
-
-#include <algorithm>
 #include <boost/asio.hpp>
 #include <iostream>
 #include <numeric>
@@ -26,6 +24,8 @@ void compute_mean_odd_only(std::vector<std::string> inputs,
     int size = std::distance(results.begin(), results.end());
 
     double mean = static_cast<double>(sum) / size;
+    database.insert_document(database.prepare_document("mean", mean).view(),
+                             "computed_mean");
     std::cout << "Mean: " << mean << std::endl;
 
   } catch (std::exception &e) {

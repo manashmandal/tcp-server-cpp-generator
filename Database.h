@@ -31,6 +31,12 @@ public:
     return make_document(kvp(key, value));
   }
 
+  std::optional<mongocxx::result::insert_one>
+  insert_document(const bsoncxx::document::view &document,
+                  std::string collection) {
+    return this->get_collection(collection).insert_one(document);
+  }
+
   void ping() {
     const auto ping_cmd = make_document(kvp("ping", 1));
     try {
