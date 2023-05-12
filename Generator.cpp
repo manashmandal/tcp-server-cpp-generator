@@ -21,7 +21,11 @@ iterateNextBatch(boost::asio::io_context &context, tcp::acceptor &acceptor) {
     socket.set_option(option);
 
     boost::array<char, 128> local_buffer;
-    socket.read_some(boost::asio::buffer(local_buffer));
+    size_t length = socket.read_some(boost::asio::buffer(local_buffer));
+
+    // This makes sure that the string is null terminated, otherwise
+    // converting it to a number might add additional digits
+    local_buffer[length] = '\0';
 
     boost::system::error_code ignored_error;
     std::string message = make_daytime_string();

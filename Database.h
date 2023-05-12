@@ -10,6 +10,9 @@
 #include <mongocxx/instance.hpp>
 #include <string>
 
+using bsoncxx::builder::basic::kvp;
+using bsoncxx::builder::basic::make_document;
+
 class Database {
 public:
   Database(std::string connection_string, std::string database_name)
@@ -22,6 +25,10 @@ public:
 
   mongocxx::collection get_collection(std::string collection_name) {
     return this->db[collection_name];
+  }
+
+  bsoncxx::document::value prepare_document(std::string key, double value) {
+    return make_document(kvp(key, value));
   }
 
   void ping() {
