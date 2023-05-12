@@ -32,8 +32,7 @@ public:
   }
 
   void ping() {
-    const auto ping_cmd = bsoncxx::builder::basic::make_document(
-        bsoncxx::builder::basic::kvp("ping", 1));
+    const auto ping_cmd = make_document(kvp("ping", 1));
     try {
       this->db.run_command(ping_cmd.view());
       std::cout << "Database connection established successfully" << std::endl;
